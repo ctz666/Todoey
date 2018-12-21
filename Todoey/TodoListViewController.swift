@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController{
 
-    let itemArray = ["Find Mike", "Buy Eggos", "Destory Demogorgon"]
+    var itemArray = ["Find Mike", "Buy Eggos", "Destory Demogorgon"]  //variable, because we will add more to the list
     
     
     override func viewDidLoad() {
@@ -55,7 +55,29 @@ class TodoListViewController: UITableViewController{
         
     }
     
+    //MARK: (3) Add new Items, the button (Bar button Item), change "system item" property to add. 
     
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()  //this variable is accessible to all the functions below, whether inside the closure or not.
+        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert) //create an alert named "Add New Todoey Item"
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in   //this is completion handler (closure)
+            //What will happen once the user clicks the Add Item button on our UIAlert
+            self.itemArray.append(textField.text!)  //add the new item as in the textField to the itemArray.
+            //inside closure, add "self.", Force unwrap the text, because there must be some text in the textfield, even if user doesn't type anything, it will be an empty string.
+            
+            self.tableView.reloadData()    //We have to reload the tableView to show the new data added to the cell, otherwise it will not update the View, but only update the Array behinds the scene. 
+        }
+        
+        alert.addTextField { (alertTextField) in     //this is another closure, when alert shows up, it will offer a textfield for you to enter
+            alertTextField.placeholder = "Create new item"   //this is a placeholder in grey, give you hints about what should be in the textfield, as soon as we start typing in the textfield, the placeholder will disappear.
+            textField = alertTextField  //set the value of the textField to what alertTextField written
+        }
+        alert.addAction(action)  //add action to the alert, action is "Add Item", it will show thie action option when alert "Add New Todoey Item" pups.
+        
+        present(alert, animated:true, completion: nil)    //When button pressed show the alert
+    }
     
 }
 
