@@ -16,15 +16,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //____________This happens before ViedidLoad, it happens when the app is launched
+        
+        //MARK: (5) optionnal: print the path of our user default file, we can prove the data have been actually saved in our user default plist file. 
+       
+         print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
+        
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        
+        //______________this happens when something happens when status change, for example when user is in the app but received a call, this is what will happen to pretent user to lose data
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        
+        //_______________this is when the App disappears from the screen ie. app enter the background state. for example, pressed home button, enters another app, your app disappears
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
@@ -38,6 +49,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        
+        //____________this is the point when your app will terminate, can be user triggered or system triggered.for example, if user switch from your app to a very resource intensive app, system will terminate your app to release memory to the other app.
+        
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 

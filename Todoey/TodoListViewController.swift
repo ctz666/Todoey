@@ -12,11 +12,17 @@ class TodoListViewController: UITableViewController{
 
     var itemArray = ["Find Mike", "Buy Eggos", "Destory Demogorgon"]  //variable, because we will add more to the list
     
+    let defaults = UserDefaults.standard  //UserDefaults is an interface to the user's defaults database, where you store key-value pairs persistently across lauches of your app.
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        
+        //MARK: (6) to retrieve the new data from the user default when app is launched. use completion handler to prevent force unwrapping and possible crash.
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {   //as? (optional) if TodoListArray is empty, it will skip this, but if there's items in TodoListArray, then itemArray = items (ie. what's in the TodoListArray)
+            itemArray = items
+        }
         
     }
 
@@ -66,6 +72,11 @@ class TodoListViewController: UITableViewController{
             //What will happen once the user clicks the Add Item button on our UIAlert
             self.itemArray.append(textField.text!)  //add the new item as in the textField to the itemArray.
             //inside closure, add "self.", Force unwrap the text, because there must be some text in the textfield, even if user doesn't type anything, it will be an empty string.
+            
+            
+            //MARK: (4) save update in user default
+            //save updated item array in our user default, it with key "TodoListArray" we can retreive the data. it will create a user default plist file with the new item added.
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
             self.tableView.reloadData()    //We have to reload the tableView to show the new data added to the cell, otherwise it will not update the View, but only update the Array behinds the scene. 
         }
